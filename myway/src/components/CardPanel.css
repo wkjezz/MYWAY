@@ -1,0 +1,314 @@
+/* ===========================
+   CardPanel – extracted styles
+   =========================== */
+
+:root {
+  --cp-bg-0: #0b0f15;
+  --cp-bg-1: #0c1118;
+  --cp-bg-2: #0a0e14;
+
+  --cp-cyan: 33, 208, 255;
+  --cp-white: 255, 255, 255;
+
+  --cp-rail-badge-w: 112px;
+
+  --cp-radius-xl: 1.5rem;
+  --cp-radius-lg: 1.75rem;
+  --cp-radius-md: 1rem;
+}
+
+.cardpanel,
+.pane--header,
+.pane--blurb { box-sizing: border-box; }
+
+/* Shell */
+.cardpanel {
+  position: relative;
+  border-radius: var(--cp-radius-xl);
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--cp-bg-0) 0%, var(--cp-bg-1) 40%, var(--cp-bg-2) 100%);
+  box-shadow: inset 0 1px 0 rgba(var(--cp-white), 0.035);
+}
+
+/* Chrome overlays */
+.cardpanel__overlay--streak,
+.cardpanel__overlay--grain,
+.cardpanel__overlay--vignette {
+  position: absolute; inset: 0; border-radius: var(--cp-radius-xl); pointer-events: none;
+}
+.cardpanel__overlay--streak {
+  background: linear-gradient(115deg,
+    rgba(var(--cp-white), .14) 0%,
+    rgba(var(--cp-white), .06) 10%,
+    rgba(var(--cp-cyan), .08) 22%,
+    rgba(0,0,0,0) 38%,
+    rgba(0,0,0,0) 58%,
+    rgba(var(--cp-cyan), .06) 72%,
+    rgba(var(--cp-white), .08) 86%,
+    rgba(var(--cp-white), .12) 100%
+  ); opacity: .25;
+}
+.cardpanel__overlay--grain {
+  background: repeating-linear-gradient(90deg, rgba(var(--cp-white), .045) 0 1px, rgba(0,0,0,0) 1px 3px);
+  mix-blend-mode: soft-light; opacity: .09;
+}
+.cardpanel__overlay--vignette {
+  background: radial-gradient(120% 100% at 50% 35%, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 55%, rgba(0,0,0,.26) 100%);
+}
+
+/* Layout: rail + content */
+.cardpanel__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr; /* stacked on mobile */
+  gap: .5rem 0;
+  align-items: stretch;
+}
+
+/* Desktop/tablet rail column */
+@media (min-width: 768px) {
+  .cardpanel__grid {
+    grid-template-columns: 132px 1fr; /* balanced vs 112px pills */
+    column-gap: 0;
+  }
+}
+
+/* Rail (mobile = wrapping row / grid, desktop = vertical) */
+.cardpanel__rail {
+  list-style: none; margin: 0; padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: .75rem;
+  row-gap: .5rem;
+}
+@media (min-width: 768px) {
+  .cardpanel__rail {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+}
+
+/* Bubbles */
+.bubble {
+  position: relative;
+  width: 5rem; height: 5rem;
+  border-radius: 9999px;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(120% 120% at 30% 22%, rgba(var(--cp-white), .26) 0%, rgba(var(--cp-cyan), .22) 22%, rgba(var(--cp-cyan), .10) 44%, rgba(0,0,0,.52) 100%),
+    linear-gradient(180deg, #213447 0%, #0f1c26 100%);
+  box-shadow:
+    0 14px 28px rgba(0,0,0,.68),
+    0 0 0 1px rgba(var(--cp-cyan), .34),
+    0 10px 26px rgba(var(--cp-cyan), .14),
+    inset 0 1px 6px rgba(var(--cp-white), .12);
+}
+.bubble::before {
+  content: ""; position: absolute; top: 9%; left: 14%;
+  width: 70%; height: 40%; border-radius: 9999px;
+  background: radial-gradient(ellipse at top left, rgba(var(--cp-white), .35), rgba(var(--cp-white), .12) 55%, transparent 72%);
+  filter: blur(8px); opacity: .65; pointer-events: none;
+}
+
+/* Rail pills */
+.rail-badge {
+  display: inline-block; text-align: center;
+  margin-top: -.25rem; padding: 6px 10px; border-radius: 9999px;
+  background: linear-gradient(180deg, #10202c 0%, #0b1822 100%);
+  box-shadow:
+    0 0 0 1px rgba(var(--cp-cyan), .28),
+    0 4px 10px rgba(var(--cp-cyan), .12),
+    inset 0 1px 0 rgba(var(--cp-white), .06);
+  color: rgba(210,240,255,.95);
+  text-transform: uppercase; letter-spacing: .08em; line-height: 1;
+  white-space: nowrap; font-size: 10px;
+
+  width: auto;              /* mobile default */
+  min-width: 96px;          /* readable floor */
+}
+@media (max-width: 360px) { .rail-badge { min-width: 88px; font-size: 9px; } }
+@media (min-width: 768px) { .rail-badge { width: var(--cp-rail-badge-w); min-width: var(--cp-rail-badge-w); } }
+
+/* Right pane wrapper */
+.pane { position: relative; display: flex; flex-direction: column; min-height: 100%; }
+
+/* Header oblong */
+.pane--header {
+  border-radius: var(--cp-radius-lg);
+  padding: .5rem 1.25rem .9rem 1rem;
+  margin-bottom: .4rem;
+  background: linear-gradient(180deg, #132636 0%, #0f212f 100%);
+  box-shadow:
+    0 14px 28px rgba(0,0,0,.55),
+    0 0 0 1px rgba(var(--cp-cyan), .28),
+    0 6px 18px rgba(var(--cp-cyan), .14),
+    inset 0 1px 0 rgba(var(--cp-white), .06);
+}
+
+/* Blurb panel */
+.pane--blurb {
+  border-radius: var(--cp-radius-md);
+  padding: .75rem 1.25rem 1rem 1rem;
+  margin-top: 0;
+  background: linear-gradient(180deg, #0e1d29 0%, #0b1721 100%);
+  box-shadow:
+    0 16px 32px rgba(0,0,0,.6),
+    0 0 0 1px rgba(var(--cp-cyan), .24),
+    0 8px 22px rgba(var(--cp-cyan), .12),
+    inset 0 1px 0 rgba(var(--cp-white), .05);
+  min-height: 220px;
+  flex: 1; /* fill down */
+}
+
+/* Title & meta */
+.header-title { color:#fff; font-weight:600; line-height:1.15; font-size:clamp(1.25rem,2.2vw,1.875rem); margin:0 0 .15rem 0; }
+.header-date  { color:rgba(228,232,240,.9); font-size:clamp(.75rem,1.2vw,.95rem); margin:0; }
+
+/* Blurb text */
+.blurb-text { color:#e6eaf1; font-size:clamp(.9rem,1.2vw,1rem); margin:0; }
+
+/* Rail item wrapper */
+.rail-item { display:flex; flex-direction:column; align-items:center; }
+
+/* ==== ORIGINAL filled “mood” icon: perfectly centered & responsive ==== */
+.mood-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72%;          /* size as % of bubble, scales with it */
+  height: auto;
+  opacity: 0.25;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+}
+.mood-gain { color: rgba(255, 74, 74, 0.9); }     /* red up */
+.mood-loss { color: rgba(56, 214, 120, 0.95); }   /* green down */
+.mood-maintain { color: rgba(255, 191, 71, 0.95);}/* amber pause */
+
+@media (max-width: 540px) { .mood-mark { width: 68%; } }
+@media (max-width: 420px) { .mood-mark { width: 64%; } }
+@media (max-width: 360px) { .mood-mark { width: 60%; } }
+
+/* =======================
+   Mood icon looped motion
+   ======================= */
+
+/* base: animation shell (centering transform is repeated in keyframes) */
+.mood-anim {
+  animation-duration: 3.2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity, filter;
+}
+
+/* Upward float for GAIN */
+@keyframes moodFloatUp {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.24;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+  }
+  50% {
+    transform: translate(-50%, -56%) scale(1.05);
+    opacity: 0.30;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,.38));
+  }
+}
+.mood-anim--up { animation-name: moodFloatUp; }
+
+/* Downward float for LOSS */
+@keyframes moodFloatDown {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.24;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+  }
+  50% {
+    transform: translate(-50%, -44%) scale(1.05);
+    opacity: 0.30;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,.38));
+  }
+}
+.mood-anim--down { animation-name: moodFloatDown; }
+
+/* Gentle breathing for MAINTAIN */
+@keyframes moodPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.24;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.06);
+    opacity: 0.32;
+  }
+}
+.mood-anim--pulse { animation-name: moodPulse; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .mood-anim { animation: none !important; }
+}
+
+/* -------------------- Responsive shrink so rail never clips -------------------- */
+@media (max-width: 540px) {
+  .bubble { width: 4.5rem; height: 4.5rem; }
+  .rail-badge {
+    min-width: 92px;
+    padding: 6px 8px;
+    font-size: 9.5px;
+    letter-spacing: 0.07em;
+  }
+  .cardpanel__rail { column-gap: 0.6rem; row-gap: 0.45rem; }
+  .pane--header { padding: 0.45rem 1rem 0.8rem 0.9rem; }
+  .pane--blurb  { padding: 0.7rem 1rem 0.9rem 0.9rem; }
+}
+@media (max-width: 420px) {
+  .bubble { width: 4rem; height: 4rem; }
+  .rail-badge { min-width: 86px; padding: 5px 8px; font-size: 9px; letter-spacing: 0.06em; }
+  .cardpanel__rail { column-gap: 0.5rem; row-gap: 0.4rem; }
+}
+@media (max-width: 360px) {
+  .bubble { width: 3.5rem; height: 3.5rem; }
+  .rail-badge { min-width: 78px; padding: 4px 7px; font-size: 8.5px; letter-spacing: 0.05em; }
+  .cardpanel__rail { column-gap: 0.45rem; row-gap: 0.35rem; }
+}
+
+/* -------- Pixel-7 (and similar) safeguard: force a tidy 2×2 rail -------- */
+@media (max-width: 430px) {
+  .cardpanel { padding-left: 12px !important; padding-right: 12px !important; }
+
+  .cardpanel__rail {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+  }
+  .rail-item {
+    flex: 1 1 calc(50% - 0.5rem);   /* two per row */
+    min-width: 0;
+  }
+
+  .bubble { width: 3.6rem; height: 3.6rem; }
+  .rail-badge {
+    width: auto;
+    min-width: 76px;
+    padding: 4px 6px;
+    font-size: 8.5px;
+    letter-spacing: 0.05em;
+  }
+
+  .pane--header { padding: 0.45rem 0.9rem 0.75rem 0.85rem; }
+  .pane--blurb  { padding: 0.7rem 0.95rem 0.9rem 0.85rem; }
+}
+@media (max-width: 380px) {
+  .bubble { width: 3.3rem; height: 3.3rem; }
+  .rail-badge { min-width: 72px; font-size: 8px; padding: 4px 6px; }
+  .cardpanel__rail { column-gap: 0.45rem; row-gap: 0.45rem; }
+}
