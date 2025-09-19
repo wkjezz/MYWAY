@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for MYWAY weight loss journal */
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-green-50 to-blue-50 min-h-screen;
+  }
+}
+
+@layer components {
+  .journal-card {
+    @apply bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300;
+  }
+  
+  .btn-primary {
+    @apply bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+  }
+}
